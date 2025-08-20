@@ -48,7 +48,58 @@ const portfolioData = {
         'Created email templates compatible across platforms (Gmail, Outlook, Yopmail), enhancing communication workflows.',
       ],
       gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-      icon: '💼'
+      icon: '💼',
+      isLive: true,
+      liveUrl: 'https://www.yliway.com/',
+      status: 'Live Website'
+    },
+    {
+      title: 'VN Casting.com',
+      subtitle: 'Casting Management Platform',
+      techStack: ['React.js', 'HTML', 'CSS', 'JavaScript', 'Expo'],
+      description: [
+        'Developed a comprehensive casting management system consisting of a public-facing website for casting opportunities and a private portal for talent profile management and submissions.',
+        'Designed interactive UI components to improve user engagement and streamline navigation.',
+        'Integrated real-time APIs using Fetch API for dynamic content updates and data-driven UI experiences.',
+        'Ensured clean separation between public and private workflows to maintain security and usability',
+      ],
+      gradient: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
+      icon: '🎬',
+      isLive: true,
+      liveUrl: 'https://vncasting.com/',
+      status: 'Live Website'
+    },
+    {
+      title: 'Tap2Health',
+      subtitle: 'Health & Wellness Platform',
+      techStack: ['HTML', 'CSS'],
+      description: [
+        'Transformed Figma UI designs into responsive, production-ready web pages.',
+        'Ensured pixel-perfect layout and styling across all breakpoints.',
+        'Focused on page speed optimization and web accessibility improvements to enhance overall UX.',
+        'Delivered clean, maintainable code following best frontend practices.',
+      ],
+      gradient: 'linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)',
+      icon: '🏥',
+      isLive: true,
+      liveUrl: 'https://tap2health.com.my/',
+      status: 'Live Website'
+    },
+    {
+      title: 'Gbazaar',
+      subtitle: 'Location-based Clothing Platform',
+      techStack: ['React Native', 'supabase', 'Cloudflare', 'TanStack Query', 'NativeWind', 'FlashList', 'FastImage'],
+      description: [
+        'Location-based platform where users can discover nearby clothing and accessories products based on their location.',
+        'Sellers can list and sell their products to nearby city buyers with reduced competition.',
+        'Built with modern mobile technologies for optimal performance and user experience.',
+        'Mobile app built with React Native and Expo for cross-platform compatibility.',
+      ],
+      gradient: 'linear-gradient(135deg, #ff6b6b 0%, #4ecdc4 100%)',
+      icon: '🛍️',
+      isLive: false,
+      githubUrl: 'https://github.com/saurabhdp99/gbazaar',
+      status: 'GitHub Repository'
     },
     {
       title: 'Roho',
@@ -62,20 +113,9 @@ const portfolioData = {
         'Ensured the widget activates after user login/signup and remains integrated within Roho\'s main platform as a modular feature.',
       ],
       gradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
-      icon: '📞'
-    },
-    {
-      title: 'VN Casting.com',
-      subtitle: 'Casting Management Platform',
-      techStack: ['React.js', 'HTML', 'CSS', 'JavaScript', 'Expo'],
-      description: [
-        'Developed a comprehensive casting management system consisting of a public-facing website for casting opportunities and a private portal for talent profile management and submissions.',
-        'Designed interactive UI components to improve user engagement and streamline navigation.',
-        'Integrated real-time APIs using Fetch API for dynamic content updates and data-driven UI experiences.',
-        'Ensured clean separation between public and private workflows to maintain security and usability',
-      ],
-      gradient: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
-      icon: '🎬'
+      icon: '📞',
+      isLive: false,
+      status: 'Private Project'
     },
     {
       title: 'Zoopup.com',
@@ -87,20 +127,9 @@ const portfolioData = {
         'Optimized front-end structure for improved performance and minimal layout shift.',
       ],
       gradient: 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)',
-      icon: '🛍️'
-    },
-    {
-      title: 'Tap2Health',
-      subtitle: 'Health & Wellness Platform',
-      techStack: ['HTML', 'CSS'],
-      description: [
-        'Transformed Figma UI designs into responsive, production-ready web pages.',
-        'Ensured pixel-perfect layout and styling across all breakpoints.',
-        'Focused on page speed optimization and web accessibility improvements to enhance overall UX.',
-        'Delivered clean, maintainable code following best frontend practices.',
-      ],
-      gradient: 'linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)',
-      icon: '🏥'
+      icon: '🛍️',
+      isLive: false,
+      status: 'Private Project'
     },
   ],
   education: [
@@ -329,17 +358,29 @@ const Skills = () => (
 
 // Project Card Component
 const ProjectCard = ({ project, index }) => {
+  const handleProjectClick = () => {
+    if (project.isLive && project.liveUrl) {
+      window.open(project.liveUrl, '_blank', 'noopener,noreferrer');
+    } else if (project.githubUrl) {
+      window.open(project.githubUrl, '_blank', 'noopener,noreferrer');
+    }
+  };
+
+  const isClickable = project.isLive || project.githubUrl;
+
   return (
     <motion.div
-      className="project-card glass-card"
+      className={`project-card glass-card ${isClickable ? 'clickable' : ''}`}
       initial={{ opacity: 0, y: 100 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}
       transition={{ duration: 0.8, delay: index * 0.2 }}
       whileHover={{ 
-        scale: 1.02,
+        scale: isClickable ? 1.05 : 1.02,
         transition: { duration: 0.3 }
       }}
+      onClick={isClickable ? handleProjectClick : undefined}
+      style={{ cursor: isClickable ? 'pointer' : 'default' }}
     >
       <div className="project-header">
         <div className="project-icon">{project.icon}</div>
@@ -379,6 +420,20 @@ const ProjectCard = ({ project, index }) => {
             </motion.span>
           ))}
         </div>
+
+        {isClickable && (
+          <motion.div 
+            className="project-action"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+          >
+            <span className="action-text">
+              {project.isLive ? '🚀 Visit Live Site' : '📂 View Repository'}
+            </span>
+          </motion.div>
+        )}
       </div>
       
       <div 

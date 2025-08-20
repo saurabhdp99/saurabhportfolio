@@ -427,7 +427,7 @@ body {
 
 /* Projects Section */
 .projects-section {
-  padding: 8rem 0;
+  padding: 0rem 0;
   position: relative;
 }
 
@@ -441,6 +441,22 @@ body {
   padding: 2.5rem;
   position: relative;
   overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.project-card.clickable {
+  cursor: pointer;
+}
+
+.project-card.clickable:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 25px 50px var(--glass-shadow);
+  border-color: var(--accent-secondary);
+}
+
+.project-card.clickable:hover .project-action {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .project-gradient-bg {
@@ -457,6 +473,7 @@ body {
   align-items: flex-start;
   gap: 1.5rem;
   margin-bottom: 2rem;
+  position: relative;
 }
 
 .project-icon {
@@ -480,6 +497,77 @@ body {
   color: var(--accent-primary);
   font-weight: 600;
   font-size: 1rem;
+}
+
+.project-status {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border: 1px solid;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.status-badge.live {
+  background: rgba(16, 185, 129, 0.1);
+  border-color: var(--accent-tertiary);
+  color: var(--accent-tertiary);
+}
+
+.status-badge.repository {
+  background: rgba(88, 166, 255, 0.1);
+  border-color: var(--text-accent);
+  color: var(--text-accent);
+}
+
+.status-badge:not(.live):not(.repository) {
+  background: rgba(139, 148, 158, 0.1);
+  border-color: var(--text-muted);
+  color: var(--text-muted);
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+  animation: pulse 2s infinite;
+}
+
+.live-dot {
+  background: var(--accent-tertiary);
+}
+
+.repo-dot {
+  background: var(--text-accent);
+}
+
+.private-dot {
+  background: var(--text-muted);
+  animation: none;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 .project-content {
@@ -528,6 +616,28 @@ body {
   background: var(--accent-primary);
   color: var(--bg-primary);
   transform: translateY(-2px);
+}
+
+.project-action {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background: rgba(124, 58, 237, 0.1);
+  border: 1px solid rgba(124, 58, 237, 0.3);
+  border-radius: 15px;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.3s ease;
+}
+
+.action-text {
+  color: var(--accent-primary);
+  font-weight: 600;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
 }
 
 /* Experience Section */
@@ -847,10 +957,11 @@ body {
   }
   
   .hero-contact {
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
     gap: 1rem;
     flex-wrap: wrap;
+    align-items: center;
   }
   
   .contact-btn {
@@ -996,6 +1107,12 @@ body {
     flex-direction: column;
     text-align: center;
     gap: 1rem;
+  }
+  
+  .project-status {
+    position: static;
+    align-self: center;
+    margin-bottom: 0.5rem;
   }
   
   .project-icon {
@@ -1172,7 +1289,7 @@ body {
   }
   
   .hero-summary {
-    font-size: 1rem;
+    font-size: 12px;
     margin-bottom: 1.5rem;
   }
   
